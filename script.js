@@ -1,14 +1,14 @@
-// Inicializar el cliente de Supabase con la URL y la clave
+// Inicializar el cliente de Supabase
 const supabase = createClient(
-  'https://ofyalhphejzwzizqkzmi.supabase.co',  // URL de Supabase
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9meWFsaHBoZWp6d3ppenFrem1pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzNTA4NzUsImV4cCI6MjA3ODkyNjg3NX0.RiTXrF_4qzLF27zaDnIAtKMBzyYrdMnzSzM0w1SBZF4'  // Tu clave de API
+  'https://ofyalhphejzwzizqkzmi.supabase.co', // Tu URL de Supabase
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9meWFsaHBoZWp6d3ppenFrem1pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzNTA4NzUsImV4cCI6MjA3ODkyNjg3NX0.RiTXrF_4qzLF27zaDnIAtKMBzyYrdMnzSzM0w1SBZF4' // Tu key de Supabase
 );
 
 // Función para obtener los sorteos de Supabase
 async function getSorteos() {
   const { data, error } = await supabase
-    .from('sorteos')  // Asegúrate de que esta tabla esté bien configurada
-    .select('*'); // Selecciona todos los sorteos
+    .from('sorteos')  // Asegúrate de que el nombre de la tabla sea correcto
+    .select('*'); // Seleccionar todos los registros
 
   if (error) {
     console.error(error);
@@ -18,7 +18,7 @@ async function getSorteos() {
   return data;
 }
 
-// Mostrar los sorteos en la página
+// Mostrar los sorteos
 window.onload = async function () {
   const sorteos = await getSorteos();
 
