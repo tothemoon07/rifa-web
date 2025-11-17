@@ -12,12 +12,18 @@ header {
   padding: 20px;
 }
 
-#sorteo {
-  text-align: center;
-  margin: 50px auto;
-  padding: 30px;
+#sorteos-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.sorteo {
   background-color: white;
   width: 80%;
+  margin: 20px 0;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -50,25 +56,6 @@ button:hover {
   background-color: #218838;
 }
 
-/* Barra de progreso */
-#barra-progreso {
-  margin-top: 30px;
-  width: 80%;
-  height: 20px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  margin: 20px auto;
-  position: relative;
-}
-
-#barra {
-  height: 100%;
-  background-color: #28a745;
-  width: 0%;
-  border-radius: 10px;
-  transition: width 0.3s ease;
-}
-
 footer {
   background-color: #343a40;
   color: white;
@@ -78,3 +65,4 @@ footer {
   width: 100%;
   bottom: 0;
 }
+
