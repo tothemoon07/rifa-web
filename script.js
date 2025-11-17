@@ -1,40 +1,44 @@
-// Función que simula el aumento del progreso en la barra
-let boletosVendidos = 0;
-const totalBoletos = 10000;
+// Conexión con Supabase
+const supabase = createClient(
+  'https://ofyalhphejzwzizqkzmi.supabase.co',  // URL de tu proyecto de Supabase
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9meWFsaHBoZWp6d3ppenFrem1pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMzNTA4NzUsImV4cCI6MjA3ODkyNjg3NX0.RiTXrF_4qzLF27zaDnIAtKMBzyYrdMnzSzM0w1SBZF4'  // Clave pública
+);
 
-function actualizarBarraProgreso() {
-  const progreso = (boletosVendidos / totalBoletos) * 100;
-  document.getElementById('barra').style.width = `${progreso}%`;
+// Función para obtener los sorteos de la base de datos
+async function getSorteos() {
+  const { data, error } = await supabase
+    .from('sorteos')  // Nombre de la tabla en Supabase
+    .select('*');  // Selecciona todos los campos de los sorteos
 
-  // Si alcanzamos el 100%, mostramos un mensaje de sorteo completo
-  if (progreso >= 100) {
-    alert("¡Sorteo completado! Todos los boletos han sido vendidos.");
+  if (error) {
+    console.error("Error al obtener sorteos: ", error);
+    return [];
   }
+
+  return data;
 }
 
-// Simulación de compra de boletos (esto será reemplazado por la lógica de verificación de pagos más adelante)
-function simularCompra() {
-  boletosVendidos += 1;  // Aumenta el contador de boletos vendidos
-  actualizarBarraProgreso();  // Actualiza la barra de progreso
-}
-
-// Llamar a la función de simulación cada segundo para ver el cambio de la barra
-setInterval(simularCompra, 1000);
+// Mostrar los sorteos en la página
 window.onload = async function () {
   const sorteos = await getSorteos();
   
-  if (sorteos) {
+  if (sorteos.length > 0) {
     const sorteosContainer = document.getElementById('sorteos-container');
     sorteos.forEach(sorteo => {
       const sorteoElement = document.createElement('div');
       sorteoElement.classList.add('sorteo');
       sorteoElement.innerHTML = `
-        <h2>${sorteo.titulo}</h2>
+        <div class="sorteo-header">
+          <h2>${sorteo.titulo}</h2>
+          <span class="popular">¡Más Popular!</span>
+        </div>
         <p>${sorteo.descripcion_corta}</p>
         <p>Precio por boleto: Bs. ${sorteo.precio_bs}</p>
         <button onclick="comprarBoleto('${sorteo.id}')">Comprar Boleto</button>
       `;
       sorteosContainer.appendChild(sorteoElement);
     });
+  } else {
+    console.log("No hay sorteos disponibles.");
   }
 };
