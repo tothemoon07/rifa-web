@@ -20,3 +20,21 @@ function simularCompra() {
 
 // Llamar a la función de simulación cada segundo para ver el cambio de la barra
 setInterval(simularCompra, 1000);
+window.onload = async function () {
+  const sorteos = await getSorteos();
+  
+  if (sorteos) {
+    const sorteosContainer = document.getElementById('sorteos-container');
+    sorteos.forEach(sorteo => {
+      const sorteoElement = document.createElement('div');
+      sorteoElement.classList.add('sorteo');
+      sorteoElement.innerHTML = `
+        <h2>${sorteo.titulo}</h2>
+        <p>${sorteo.descripcion_corta}</p>
+        <p>Precio por boleto: Bs. ${sorteo.precio_bs}</p>
+        <button onclick="comprarBoleto('${sorteo.id}')">Comprar Boleto</button>
+      `;
+      sorteosContainer.appendChild(sorteoElement);
+    });
+  }
+};
